@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="/p/main.css">
+
+    <!-- Page Title -->
+    <title>um. - Join!</title>
+</head>
+<body>
+    
+    <div class="header">
+        <h1><a href="/">um..</a></h1>
+        <h1 class="pageName">join a game!</h1>
+    </div>
+
+    <spacer/>
+
+    <form action="/game" method="POST">
+
+        <h3>Room Code</h3>
+        <div class="codes">
+            <input type="text" name="roomCode" id="roomCode0" pattern="[0-9]" maxlength="1" required>
+            <input type="text" name="roomCode" id="roomCode1" pattern="[0-9]" maxlength="1" required>
+            <input type="text" name="roomCode" id="roomCode2" pattern="[0-9]" maxlength="1" required>
+            <input type="text" name="roomCode" id="roomCode3" pattern="[0-9]" maxlength="1" required>
+            <input type="text" name="roomCode" id="roomCode4" pattern="[0-9]" maxlength="1" required>
+        </div>
+
+        <h3>Player Name</h3>
+        <input type="text" name="playerName" id="playerName" spellcheck="false" maxlength="17" minlength="3" required>
+        
+        <br><input type="submit" value="join!" id="submit">
+
+    </form>
+
+    <!-- Script Ahead -->
+    <script>
+
+        var container = document.getElementsByClassName('codes')[0];
+        for(var i = 0; i < container.children.length; i++) {
+
+            container.children[i].addEventListener('keyup', () => {
+                var next = 'roomCode' + (parseInt(event.target.id.slice(8)) + 1);
+
+                if(document.getElementById(next)) document.getElementById(next).focus();
+                else document.getElementById('playerName').focus();
+
+            });
+
+        }
+            
+    </script>
+
+</body>
+</html>

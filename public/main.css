@@ -1,0 +1,116 @@
+/** Fonts From Google Fonts **/
+@import url("https://fonts.googleapis.com/css?family=PT+Mono&display=swap");
+/** Font Palette **/
+/** Colour Palette **/
+/** HTML Styling **/
+html {
+  overflow: hidden;
+  background-color: #E88266;
+}
+
+html body {
+  margin: 5%;
+  height: 85vh;
+  width: 90%;
+  border-radius: 30px;
+  border: dotted white 5px;
+  background-color: #FF857C;
+  font-family: "PT Mono", monospace;
+  color: white;
+}
+
+html body * {
+  margin: 2.5%;
+}
+
+html body a {
+  text-decoration: none;
+  color: #FFC67C;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+html body a:hover {
+  color: white;
+}
+
+html body .header * {
+  display: inline-block;
+}
+
+html body .header .pageName {
+  float: right;
+}
+
+html body spacer {
+  display: block;
+  border: 0;
+  border-radius: 30px;
+  border-top: 2px solid white;
+  margin: 2%;
+  margin-top: 0%;
+  height: 2px;
+}
+
+html body form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+html body form .codes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+html body form .codes input {
+  width: 2.25vw;
+  text-align: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+html body form input {
+  font-family: "PT Mono", monospace;
+  color: white;
+  font-size: large;
+  background-color: #FFA370;
+  border: none;
+  outline: none;
+  margin-top: 0.25vh;
+  height: 3.75vh;
+  border-radius: 30px;
+}
+
+html body form #playerName {
+  text-indent: 1.25vw;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+html body form #submit {
+  height: 5vh;
+  font-size: x-large;
+  width: 15vw;
+  cursor: pointer;
+}
+
+html body form h3 {
+  font-size: x-large;
+}
+/*# sourceMappingURL=main.css.map */

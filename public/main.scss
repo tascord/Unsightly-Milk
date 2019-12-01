@@ -1,0 +1,199 @@
+/** Fonts From Google Fonts **/
+
+// PT Mono (Typewriter esque) | font-family: 'PT Mono', monospace;
+@import url('https://fonts.googleapis.com/css?family=PT+Mono&display=swap');
+
+/** Font Palette **/
+$primaryFont    : 'PT Mono', monospace;
+
+/** Colour Palette **/
+$primary        : #FF857C;
+$secondary      : #FFA370;
+$tertiary       : #E86689;
+$background     : #E88266;
+$highlight      : #FFC67C;
+
+$textColour     : white;
+$borderColour   : white;
+
+$transitionTime : 0.25s;
+
+/** HTML Styling **/
+
+html {
+
+    // Remove Scrolling
+    overflow: hidden;
+
+    // Background Colour
+    background-color: $background;
+
+    body {
+
+        // Give The Body A Bit Of Room To Breath
+        margin: 5%;
+
+        // Make The Body Fill The Page
+        height: 85vh;
+        width: 90%;
+
+        // Round The Corners
+        border-radius: 30px;
+
+        // Border
+        border: dotted $borderColour 5px;
+
+        // Background Color
+        background-color: $primary;
+
+        //Text Settings
+        font-family: $primaryFont;
+        color: $textColour;
+
+        // Everything Inside The Body
+        * {
+            margin: 2.5%;
+        }
+
+        // A links (Hyperlinks)
+        a {
+            // Remove the underline and replaces the purple colour with a nice peach one.
+            text-decoration: none;
+            color: $highlight;
+
+            // On Hover, Change Color To Default Text Colour
+            transition: $transitionTime;
+
+            &:hover {
+                color: $textColour;
+            }
+
+
+        }
+
+        // Headers For Pages
+        .header {
+
+            // Make The Text Inside The Header Inline
+            * { display: inline-block; }
+
+            // Make The Page Name On The Right
+            .pageName { float: right; }
+        }
+
+        //Content Spacers
+        spacer {
+            
+            // Make It A BLOCK
+            display: block;
+           
+            // Create The Line, And Round The Edges
+            border: 0;
+            border-radius: 30px;
+            border-top: 2px solid $borderColour;
+            
+            // Give It Some Room To Breath
+            margin: 2%;
+            margin-top: 0%;
+
+            // Set A Maximum Height
+            height: 2px;
+
+        }
+
+        // Join A Game Form
+        form {
+
+            // Align All Items Inside FORM To Center, Both Vertically And Horizontally
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+
+            // Set The Sizing For The Code Inputs
+            .codes {
+
+                // Align Codes Center Horizontally
+                display: flex;
+                justify-content: center;
+                width: 100%;
+
+                input {
+                    width: 2.25vw;
+                    text-align: center;
+                    margin-left: 1vw;
+                    margin-right: 1vw;
+                }
+
+            }
+
+            // All Input Fields (Buttons, Room Codes, Name Input Etc.)
+            input {
+                
+                // Font Used
+                font-family: $primaryFont;
+                
+                // Text Colout
+                color: $textColour;
+
+                // Set Font Size
+                font-size: large;
+
+                // Background Colour
+                background-color: $secondary;
+                
+                // Remove Default Outline
+                border: none;
+                outline: none;
+
+                // Set Spacing Between Elenents
+                margin-top: 0.25vh;
+
+                // Set Heights Of Input Fields
+                height: 3.75vh;
+
+                // Round Edges
+                border-radius: 30px;
+
+            }
+
+            // Player Name Input
+            #playerName {
+                
+                // Indent Text Due To Clipping
+                text-indent: 1.25vw;
+
+                // Larger Font Size Due To Being A Name Input
+                font-size: x-large;
+
+                // Bold Text
+                font-weight: bold;
+
+            }
+
+            // Button
+            #submit {
+
+                height: 5vh;
+
+                font-size: x-large;
+
+                width: 15vw;
+
+                // margin-top: 7.5vh;
+
+                cursor: pointer;
+            }
+
+            //Text Labels
+            h3 {
+                
+                font-size: x-large;
+
+            }
+
+        }
+
+    }
+}
