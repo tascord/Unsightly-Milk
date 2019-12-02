@@ -101,6 +101,14 @@ html {
 
         }
 
+        // Error Text
+        .error {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            color: $tertiary;
+         }
+
         // Join A Game Form
         form {
 
@@ -118,6 +126,9 @@ html {
                 display: flex;
                 justify-content: center;
                 width: 100%;
+
+                margin-bottom: 0.15vh;
+                margin-top: 0vh;
 
                 input {
                     width: 2.25vw;
@@ -186,10 +197,44 @@ html {
                 cursor: pointer;
             }
 
-            //Text Labels
+            // Text Labels
             h3 {
                 
+                margin-bottom: 1.25vh;
+                margin-top: 3vh;
+
                 font-size: x-large;
+
+            }
+
+            // Game List
+            #games {
+
+                width: 0px;
+                height: 0px;
+
+                margin: 0px;
+
+                input {
+                    visibility: hidden;
+                }
+                
+                
+            }
+
+            #gameText {
+
+                display: flex;
+                flex-direction: column;
+
+                margin: 0px;
+                padding: 0px;
+                display: flex;
+
+                .selected {
+                    color: $tertiary;
+                }
+
 
             }
 

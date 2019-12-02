@@ -52,6 +52,12 @@ html body spacer {
   height: 2px;
 }
 
+html body .error {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #E86689;
+}
+
 html body form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -76,6 +82,8 @@ html body form .codes {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
+  margin-bottom: 0.15vh;
+  margin-top: 0vh;
 }
 
 html body form .codes input {
@@ -111,6 +119,35 @@ html body form #submit {
 }
 
 html body form h3 {
+  margin-bottom: 1.25vh;
+  margin-top: 3vh;
   font-size: x-large;
+}
+
+html body form #games {
+  width: 0px;
+  height: 0px;
+  margin: 0px;
+}
+
+html body form #games input {
+  visibility: hidden;
+}
+
+html body form #gameText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+}
+
+html body form #gameText .selected {
+  color: #E86689;
 }
 /*# sourceMappingURL=main.css.map */

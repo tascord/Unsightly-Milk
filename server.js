@@ -4,10 +4,16 @@ const fs = require('fs');
 // Console Styling
 const chalk = require('chalk');
 
+// Storing Games
+if(!fs.existsSync('./games.json')) fs.writeFileSync('./games.json', '{}');
+var games = JSON.parse(fs.readFileSync('./games.json'));
+
 // Start WebServer
 const app = require('express')();
-app.listen(8080);
-info('Server started!');
+const http = require('http').createServer(app);
+var io = require('socket.io')(http);
+http.listen(8080, () => info("Started Server!"));
+
 
 app.get('*', (req, res) => {
 
@@ -35,7 +41,12 @@ app.get('*', (req, res) => {
 
         case "/":
             // Home Page
-            res.render(page('index'), {});
+            res.render(page('index'), {error: req.query.error ? req.query.error : ""});
+        break;
+
+        case "/host":
+            // Hosting A Game Dashboard
+            res.render(page('host'), {});
         break;
 
         default:
@@ -99,7 +110,23 @@ app.get('*', (req, res) => {
 
 });
 
-//Coloured Warnings, Logging And Erroring!
+// Handling Form Data
+app.post('*', (req, res) => {
+
+    switch(req.path) {
+
+        case "/game":
+            res.redirect('/?error=That Room Dosen\'t Exist!');
+        break;
+
+    }
+
+});
+
+// Coloured Warnings, Logging And Erroring!
 function error(text) { console.log(chalk.red(`\n[-] ${text}\n`))    }
 function warn(text)  { console.log(chalk.purple(`\n[~] ${text}\n`)) }
 function info(text)  { console.log(chalk.cyan(`\n[+] ${text}\n`))   }
+
+// Update The Games.JSON File
+function update()    { fs.writeFileSync('./games.json', JSON.stringify(games, null, 4)); }
