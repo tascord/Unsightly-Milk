@@ -24,22 +24,21 @@
 
     <form action="/create" method="POST">
     
+        <h3 class="error"><%=error%></h3>
+
         <h3>Game Selection</h3>
-        <div id="games">
-
-            <input type="radio" name="gameTrivia" id="radioTrivia" disabled>
-            <input type="radio" name="gameFunnys" id="radioFunnys" disabled>
-            <input type="radio" name="gameNotCAH" id="radioNotCAH" disabled>
-
-        </div>
-
         <div id="gameText">
-            <h3><a href="#" onclick="select('trivia')" id="labelTrivia">trivia</a></h3>
+            <h3><a href="#" onclick="select('trivia')" id="labelTrivia" class="selected">trivia</a></h3>
             <h3><a href="#" onclick="select('funnys')" id="labelFunnys">funnys</a></h3>
             <h3><a href="#" onclick="select('cards')" id="labelNotCAH">cards</a></h3>
         </div>
 
-        <br><input type="submit" value="Start Game!">
+        <h3>Modifiers</h3>
+        <sub>coming soon..</sub>
+
+        <input type="hidden" name="game" id="game" value="Trivia">
+
+        <br><input type="submit" value="start!" id="submit">
 
     </form>
 
@@ -55,17 +54,17 @@
 
             if(item == "trivia") {
                 document.getElementById('labelTrivia').classList.add('selected');
-                document.getElementById('radioTrivia').select();
+                document.getElementById('game').value = "Trivia";
             }
 
             if(item == "funnys") {
                 document.getElementById('labelFunnys').classList.add('selected');
-                document.getElementById('radioFunnys').select();
+                document.getElementById('game').value = "Funnys";
             }
 
             if(item == "cards") {
                 document.getElementById('labelNotCAH').classList.add('selected');
-                document.getElementById('radioNotCAH').select();
+                document.getElementById('game').value = "NotCAH";
             }
 
         }

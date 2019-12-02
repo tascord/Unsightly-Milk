@@ -55,7 +55,7 @@ html body spacer {
 html body .error {
   margin-top: 0;
   margin-bottom: 0;
-  color: #E86689;
+  color: #eb3c6a;
 }
 
 html body form {
@@ -124,13 +124,13 @@ html body form h3 {
   font-size: x-large;
 }
 
-html body form #games {
+html body form .hidden {
   width: 0px;
   height: 0px;
   margin: 0px;
 }
 
-html body form #games input {
+html body form .hidden input {
   visibility: hidden;
 }
 
@@ -148,6 +148,13 @@ html body form #gameText {
 }
 
 html body form #gameText .selected {
-  color: #E86689;
+  color: #eb3c6a;
+}
+
+html body sub {
+  margin: 0px;
+  font-size: large;
+  color: #ffe9c5;
+  font-style: italic;
 }
 /*# sourceMappingURL=main.css.map */

@@ -1,1 +1,15 @@
-{}
+[
+    {
+        "code": "12345",
+        "token": "password",
+        "game": "trivia",
+        "players": [
+            {
+                "name": "brumnt",
+                "score": 0,
+                "streak": 0,
+                "topAnswer": ""
+            }
+        ]
+    }
+]

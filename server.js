@@ -5,7 +5,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 // Storing Games
-if(!fs.existsSync('./games.json')) fs.writeFileSync('./games.json', '{}');
+if(!fs.existsSync('./games.json')) fs.writeFileSync('./games.json', '[]');
 var games = JSON.parse(fs.readFileSync('./games.json'));
 
 // Start WebServer
@@ -14,7 +14,11 @@ const http = require('http').createServer(app);
 var io = require('socket.io')(http);
 http.listen(8080, () => info("Started Server!"));
 
+// Getting Information From Forms
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Handling Web Requests
 app.get('*', (req, res) => {
 
     // Handle Public Files (Css, Images, What-have-you)
@@ -46,67 +50,14 @@ app.get('*', (req, res) => {
 
         case "/host":
             // Hosting A Game Dashboard
-            res.render(page('host'), {});
+            res.render(page('host'), {error: req.query.error ? req.query.error : ""});
         break;
 
         default:
             // Any Page Not Defined Above (A 404)
             res.render(pageNon());
         break;
-
     }
-
-
-    // Make It Easier To Reference Pages
-    function page(pageName) {
-
-        var path = __dirname + '/pages/' + pageName + '.ejs';
-
-        if(!fs.existsSync(path)) { 
-            
-            // File Dosen't Exist
-
-            // Send An Error That The Page Dosen't Exist
-            console.log(`[-] Error: Invalid page provided ('${pageName}')!`);
-            return pageNon();
-        }
-
-        // It Does!
-        else return path;
-
-    }
-
-    function media(mediaPath) {
-
-        var path = __dirname + '/public/' + mediaPath;
-
-        // Media Dosen't Exist
-        if(!fs.existsSync(path)) return false;
-
-        // Media Does!
-        else return path;
-
-    }
-
-    function pageNon() {
-        
-        var path = __dirname + '/pages/404.ejs';
-
-        if(!fs.existsSync(path)) {
-            
-            // 404 Page Dosen't Exist!
-
-            fs.writeFileSync(__dirname + '/panic.ejs', 'Error finding 404 page, please get a hold of the owner and let them know about this!');
-            
-            error('The 404 Page Dosen\'t Exist!');
-            
-            return __dirname + '/panic.ejs'
-        }
-
-        // It Does!
-        else return path;
-    }
-
 
 });
 
@@ -115,13 +66,92 @@ app.post('*', (req, res) => {
 
     switch(req.path) {
 
-        case "/game":
+        case "/join":
+            
+            var code = req.body.roomCode0 + req.body.roomCode1 + req.body.roomCode2 + req.body.roomCode3 + req.body.roomCode4;
+            var name = req.body.playerName.trim();
+
+            for(var i = 0; i < games.length; i++) {
+                if(games[i].code === code) {
+                    
+                    for(var j = 0; j < games[i].players.length; j++) {
+                        if(games[i].players[j].name.toLowerCase() == name) return res.redirect('/?error=A Player Already Has That Name!')
+                    }
+                    
+                    games[i].players.push({name: name, score: 0, streak: 0, topAnswer: ""});
+
+                    update();
+
+                    return res.render(page('games/' + games[i].game));
+                }
+            }
+        
             res.redirect('/?error=That Room Dosen\'t Exist!');
+
+        break;
+
+        case "/create":
+            console.log(req.body);
+            res.send('ty <3');
+        break;
+
+        default:
+            res.send('{success: false, error: "Invalid Post Location"}');
         break;
 
     }
 
 });
+
+// Make It Easier To Reference Pages
+function page(pageName) {
+
+    var path = __dirname + '/pages/' + pageName + '.ejs';
+
+    if(!fs.existsSync(path)) { 
+        
+        // File Dosen't Exist
+
+        // Send An Error That The Page Dosen't Exist
+        console.log(`[-] Error: Invalid page provided ('${pageName}')!`);
+        return pageNon();
+    }
+
+    // It Does!
+    else return path;
+
+}
+
+function media(mediaPath) {
+
+    var path = __dirname + '/public/' + mediaPath;
+
+    // Media Dosen't Exist
+    if(!fs.existsSync(path)) return false;
+
+    // Media Does!
+    else return path;
+
+}
+
+function pageNon() {
+    
+    var path = __dirname + '/pages/404.ejs';
+
+    if(!fs.existsSync(path)) {
+        
+        // 404 Page Dosen't Exist!
+
+        fs.writeFileSync(__dirname + '/panic.ejs', 'Error finding 404 page, please get a hold of the owner and let them know about this!');
+        
+        error('The 404 Page Dosen\'t Exist!');
+        
+        return __dirname + '/panic.ejs'
+    }
+
+    // It Does!
+    else return path;
+}
 
 // Coloured Warnings, Logging And Erroring!
 function error(text) { console.log(chalk.red(`\n[-] ${text}\n`))    }

@@ -9,11 +9,12 @@ $primaryFont    : 'PT Mono', monospace;
 /** Colour Palette **/
 $primary        : #FF857C;
 $secondary      : #FFA370;
-$tertiary       : #E86689;
+$tertiary       : rgb(235, 60, 106);
 $background     : #E88266;
 $highlight      : #FFC67C;
 
 $textColour     : white;
+$subTextColour  : #ffe9c5;
 $borderColour   : white;
 
 $transitionTime : 0.25s;
@@ -207,8 +208,8 @@ html {
 
             }
 
-            // Game List
-            #games {
+            // Hidden Radios Etc.
+            .hidden {
 
                 width: 0px;
                 height: 0px;
@@ -238,6 +239,14 @@ html {
 
             }
 
+        }
+
+        // Secretive Text
+        sub {
+            margin: 0px;
+            font-size: large;
+            color: $subTextColour;
+            font-style: italic;
         }
 
     }
