@@ -5,7 +5,8 @@
         "game": "trivia",
         "players": [
             {
-                "name": "brumnt",
+                "name": "tascord",
+                "id": "rxcynm1a8I",
                 "score": 0,
                 "streak": 0,
                 "topAnswer": ""

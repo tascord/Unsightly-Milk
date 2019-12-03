@@ -7,14 +7,15 @@
 $primaryFont    : 'PT Mono', monospace;
 
 /** Colour Palette **/
-$primary        : #FF857C;
-$secondary      : #FFA370;
-$tertiary       : rgb(235, 60, 106);
-$background     : #E88266;
-$highlight      : #FFC67C;
+$primary        : #f4b075;
+$secondary      : #e09a5e;
+$tertiary       : #025939;
+$background     : #0aaf81;
+$highlight      : #0ece98;
 
 $textColour     : white;
 $subTextColour  : #ffe9c5;
+$linkColour     : #05fcb6;
 $borderColour   : white;
 
 $transitionTime : 0.25s;
@@ -60,7 +61,7 @@ html {
         a {
             // Remove the underline and replaces the purple colour with a nice peach one.
             text-decoration: none;
-            color: $highlight;
+            color: $linkColour;
 
             // On Hover, Change Color To Default Text Colour
             transition: $transitionTime;
@@ -80,6 +81,9 @@ html {
 
             // Make The Page Name On The Right
             .pageName { float: right; }
+
+            // Margins
+            margin-bottom: 0px;
         }
 
         //Content Spacers

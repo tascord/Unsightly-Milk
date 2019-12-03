@@ -53,6 +53,12 @@ app.get('*', (req, res) => {
             res.render(page('host'), {error: req.query.error ? req.query.error : ""});
         break;
 
+        case "/play":
+            // Rendering Games
+            for(var i = 0; i < games.length; i++) if(games[i].code === req.query.code) return res.render(page('/games/' + games[i].game), {token: games[i].code});
+            res.render(pageNon());
+        break;
+
         default:
             // Any Page Not Defined Above (A 404)
             res.render(pageNon());
@@ -78,11 +84,25 @@ app.post('*', (req, res) => {
                         if(games[i].players[j].name.toLowerCase() == name) return res.redirect('/?error=A Player Already Has That Name!')
                     }
                     
-                    games[i].players.push({name: name, score: 0, streak: 0, topAnswer: ""});
+                    var uuid = "";
+                    var uuidExists = true;
+                    while(uuidExists) {
+
+                        uuid = randString(10);
+                        var count = 0;
+
+                        for(var j = 0; j < games[i].players.length; j++) {
+                            if(games[i].players[j].id === uuid) {count++}
+                        }
+
+                        if(count == 0) uuidExists = false;
+                    }
+
+                    games[i].players.push({name: name, id: uuid, score: 0, streak: 0, topAnswer: ""});
 
                     update();
 
-                    return res.render(page('games/' + games[i].game));
+                    return res.redirect('play?code=' + games[i].code + '&uuid=' + uuid);
                 }
             }
         
@@ -91,8 +111,7 @@ app.post('*', (req, res) => {
         break;
 
         case "/create":
-            console.log(req.body);
-            res.send('ty <3');
+
         break;
 
         default:
@@ -160,3 +179,16 @@ function info(text)  { console.log(chalk.cyan(`\n[+] ${text}\n`))   }
 
 // Update The Games.JSON File
 function update()    { fs.writeFileSync('./games.json', JSON.stringify(games, null, 4)); }
+
+function randString(length, charSet) {
+    
+    var result = '';
+    if(!charSet) var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = charSet.length;
+    
+    for ( var i = 0; i < length; i++ ) {
+       result += charSet.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+ 

@@ -5,7 +5,7 @@
 /** HTML Styling **/
 html {
   overflow: hidden;
-  background-color: #E88266;
+  background-color: #0aaf81;
 }
 
 html body {
@@ -14,7 +14,7 @@ html body {
   width: 90%;
   border-radius: 30px;
   border: dotted white 5px;
-  background-color: #FF857C;
+  background-color: #f4b075;
   font-family: "PT Mono", monospace;
   color: white;
 }
@@ -25,13 +25,17 @@ html body * {
 
 html body a {
   text-decoration: none;
-  color: #FFC67C;
+  color: #05fcb6;
   -webkit-transition: 0.25s;
   transition: 0.25s;
 }
 
 html body a:hover {
   color: white;
+}
+
+html body .header {
+  margin-bottom: 0px;
 }
 
 html body .header * {
@@ -55,7 +59,7 @@ html body spacer {
 html body .error {
   margin-top: 0;
   margin-bottom: 0;
-  color: #eb3c6a;
+  color: #025939;
 }
 
 html body form {
@@ -97,7 +101,7 @@ html body form input {
   font-family: "PT Mono", monospace;
   color: white;
   font-size: large;
-  background-color: #FFA370;
+  background-color: #e09a5e;
   border: none;
   outline: none;
   margin-top: 0.25vh;
@@ -148,7 +152,7 @@ html body form #gameText {
 }
 
 html body form #gameText .selected {
-  color: #eb3c6a;
+  color: #025939;
 }
 
 html body sub {
