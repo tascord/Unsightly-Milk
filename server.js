@@ -55,7 +55,7 @@ app.get('*', (req, res) => {
 
         case "/play":
             // Rendering Games
-            for(var i = 0; i < games.length; i++) if(games[i].code === req.query.code) return res.render(page('/games/' + games[i].game), {token: games[i].code});
+            for(var i = 0; i < games.length; i++) if(games[i].code === req.query.code) return res.render(page('/games/' + games[i].game), {code: games[i].code});
             res.render(pageNon());
         break;
 
