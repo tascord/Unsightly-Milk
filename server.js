@@ -4,9 +4,8 @@ const fs = require('fs');
 // Console Styling
 const chalk = require('chalk');
 
-// Storing Games
-if(!fs.existsSync('./games.json')) fs.writeFileSync('./games.json', '[]');
-var games = JSON.parse(fs.readFileSync('./games.json'));
+// Game Handler
+const gameManager = require('./gameManager.js')(fs);
 
 // Start WebServer
 const app = require('express')();
@@ -55,8 +54,10 @@ app.get('*', (req, res) => {
 
         case "/play":
             // Rendering Games
-            for(var i = 0; i < games.length; i++) if(games[i].code === req.query.code) return res.render(page('/games/' + games[i].game), {code: games[i].code});
-            res.render(pageNon());
+            var game = getGames(req.query)
+
+            if(game === false) return res.render(pageNon());
+            res.render(page('/games/' + game.game), {code: game.code});
         break;
 
         default:
@@ -76,42 +77,60 @@ app.post('*', (req, res) => {
             
             var code = req.body.roomCode0 + req.body.roomCode1 + req.body.roomCode2 + req.body.roomCode3 + req.body.roomCode4;
             var name = req.body.playerName.trim();
+ 
+            var game = getGame(code);
+            if(game === false) return res.redirect('/?error=That Room Dosen\'t Exist');
 
-            for(var i = 0; i < games.length; i++) {
-                if(games[i].code === code) {
-                    
-                    for(var j = 0; j < games[i].players.length; j++) {
-                        if(games[i].players[j].name.toLowerCase() == name) return res.redirect('/?error=A Player Already Has That Name!')
-                    }
-                    
-                    var uuid = "";
-                    var uuidExists = true;
-                    while(uuidExists) {
+            if(getPlayer(code, name) != false) return res.redirect('/?error=A Player Already Has That Name!');
+            
 
-                        uuid = randString(10);
-                        var count = 0;
+            var uuid = "";
+            var uuidExists = true;
+            while(uuidExists) {
 
-                        for(var j = 0; j < games[i].players.length; j++) {
-                            if(games[i].players[j].id === uuid) {count++}
-                        }
+                uuid = randString(10);
+                var count = 0;
 
-                        if(count == 0) uuidExists = false;
-                    }
+                if(game.players.length === 0) uuidExists = false;
 
-                    games[i].players.push({name: name, id: uuid, score: 0, streak: 0, topAnswer: ""});
-
-                    update();
-
-                    return res.redirect('play?code=' + games[i].code + '&uuid=' + uuid);
+                for(var j = 0; j < game.players.length; j++) {
+                    if(game.players[j].id === uuid) {count++}
                 }
+
+                if(count == 0) uuidExists = false;
             }
-        
-            res.redirect('/?error=That Room Dosen\'t Exist!');
+
+            createPlayer(game.code, {name: name, id: uuid, score: 0, streak: 0, topAnswer: ""});
+
+            return res.redirect('play?code=' + game.code + '&uuid=' + uuid);
 
         break;
 
         case "/create":
+            
+            var neweGame = req.body;
+            
+            var code = "";
+            var codeExists = true;
 
+            var games = getGames();
+
+            while(codeExists) {
+
+                code = randString(5, "0123456789");
+                var count = 0;
+
+                for(var j = 0; j < games.length; j++) {
+                    if(games[j].code === code) {count++}
+                }
+
+                if(count == 0) uuidExists = false;
+            }            
+
+            neweGame.code = code;
+            createGame(game);
+
+            res.send(getGames());
         break;
 
         default:
@@ -176,9 +195,6 @@ function pageNon() {
 function error(text) { console.log(chalk.red(`\n[-] ${text}\n`))    }
 function warn(text)  { console.log(chalk.purple(`\n[~] ${text}\n`)) }
 function info(text)  { console.log(chalk.cyan(`\n[+] ${text}\n`))   }
-
-// Update The Games.JSON File
-function update()    { fs.writeFileSync('./games.json', JSON.stringify(games, null, 4)); }
 
 function randString(length, charSet) {
     
