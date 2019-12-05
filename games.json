@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "code": "19957",
+        "game": "trivia",
+        "gameData": {
+            "roundLength": 20,
+            "roundCount": 10,
+            "questionPacks": [],
+            "askedQuestions": []
+        },
+        "players": [
+            {
+                "name": "tascord",
+                "id": "QaZoKNtkv7LzHi3",
+                "score": 0,
+                "streak": 0,
+                "topAnswer": ""
+            }
+        ],
+        "hostHeartbeat": true,
+        "hostToken": "u5MgVk4HjOdAI6ffoA6h"
+    },
+    {
+        "code": "49220",
+        "game": "trivia",
+        "gameData": {
+            "roundLength": 20,
+            "roundCount": 10,
+            "questionPacks": [],
+            "askedQuestions": []
+        },
+        "players": [
+            {
+                "name": "tascord",
+                "id": "TTi9EZBSiA1s1QA",
+                "score": 0,
+                "streak": 0,
+                "topAnswer": ""
+            }
+        ],
+        "hostHeartbeat": true,
+        "hostToken": "Yy03TcQYYwZ6cB2mQrDl"
+    }
+]

@@ -11,24 +11,30 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <!-- Styling -->
-    <link rel="stylesheet" href="p/main.css">
+    <link rel="stylesheet" href="p/<%=style%>">
 
     <!-- Page Title -->
-    <title>um. - Trivia!</title>
+    <title>um. - <%=game%> | <%=name%></title>
     
 </head>
-<body>
+
+<body onload="joinGame()">
     
     <div class="header">
         <h1><a href="/">um.</a></h1>
-        <h1 class="pageName">trivia</h1>
+        <h1 class="pageName"><%=game%></h1>
     </div>
 
     <spacer></spacer>
 
     <script>
     
-        var socket = io();    
+        var socket = io("/<%=code%>");
+        const token = "<%=token%>";
+
+        function joinGame() {
+            socket.emit('join', {auth: token});
+        }
 
     </script>
 

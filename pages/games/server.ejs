@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Game Handling -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="p/<%=style%>">
+
+    <!-- Page Title -->
+    <title>um. - <%=game%></title>
+    
+</head>
+<body>
+    
+    <div class="header">
+        <h1><a href="/">um.</a></h1>
+        <h1 class="pageName"><%=game%></h1>
+    </div>
+
+    <spacer></spacer>
+
+    <div id="codeBig">
+        <h1 style="font-size: 80px;">Join The Fun!</h1>
+        <h2 class="rainbow" style="font-size: 70px"><%=code%></h2><br>
+        <h3 id="playerCount">...</h3>      
+    </div>
+
+    <script>
+    
+        var gameStarted = false;
+
+        var socket = io('/<%=socketGroup%>');
+
+        socket.on('member', (playerCount) => {
+            if(!gameStarted) document.getElementById('playerCountBig').innerText = playerCount > 0 ? playerCount + ' people joined!' : '...';
+            else document.getElementById('playerCountSmall').innerText = playerCount > 0 ? playerCount + ' people joined!' : '...';
+        })
+
+        socket.on('start', () => {
+            gameStarted = true;
+            document.getElementById('codeBig').style.visibility = 'hidden';
+            document.getElementById('codeSmall').style.visibility = 'visible';
+        });
+
+        socket.on('question', (question, questionData) => {
+            
+            alert(question);
+
+            document.getElementById('question').innerText = question;
+
+            switch (questionData.type) {
+                
+                case "input":
+
+                break;
+
+                case "selection":
+
+                break;
+
+                case "drawing":
+
+                break;
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

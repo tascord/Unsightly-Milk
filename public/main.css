@@ -161,4 +161,57 @@ html body sub {
   color: #ffe9c5;
   font-style: italic;
 }
+
+html body #codeBig {
+  width: 100%;
+  height: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+html body .rainbow {
+  background-image: repeating-linear-gradient(45deg, #ff8fc0 0%, #80baff 33%, #89ffb4 66%, #ffd476 100%);
+  text-align: center;
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 24px;
+  -webkit-animation: rainbow 5s ease infinite;
+          animation: rainbow 5s ease infinite;
+}
+
+@-webkit-keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 25%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 25%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 /*# sourceMappingURL=main.css.map */

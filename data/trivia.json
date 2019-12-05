@@ -1,3 +1,22 @@
 [
-    
+    {
+        "name": "Main Question Pack",
+        "questions": [
+            {
+                "question": "Who won the 2011 'Artist of the Year' award at the AMA's?",
+                "answer": "Taylor Swift",
+                "fakes": ["Adele", "Bruno Mars", "Katy Perry", "Maroon 5"]
+            },
+            {
+                "question": "What year did the first episode of Doctor Who aired?",
+                "answer": "1963",
+                "fakes": ["1960", "1971", "1969", "1965"]
+            },
+            {
+                "question": "What song topped the Billboard chards for 14 consecutive weeks in 2015?",
+                "answer": "Uptown Funk",
+                "fakes": ["Thinking Out Loud", "Sugar", "Blank Space", "Cheerleader"]
+            }
+        ]
+    }
 ]

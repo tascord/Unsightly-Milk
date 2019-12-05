@@ -44,11 +44,12 @@
 
     <!-- Script Ahead -->
     <script>
-
+        
         var container = document.getElementsByClassName('codes')[0];
         for(var i = 0; i < container.children.length; i++) {
 
             container.children[i].addEventListener('keyup', () => {
+                
                 var next = 'roomCode' + (parseInt(event.target.id.slice(8)) + 1);
 
                 if(event.target.value == "") return;

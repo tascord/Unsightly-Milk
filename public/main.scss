@@ -253,5 +253,36 @@ html {
             font-style: italic;
         }
 
+        #codeBig {
+            
+            width: 100%;
+            height: 60%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .rainbow {
+            background-image: repeating-linear-gradient(45deg, rgba(255,143,192,1) 0%, rgba(128,186,255,1) 33%, rgba(137,255,180,1) 66%, rgba(255,212,118,1) 100%);
+            text-align: center;
+            background-size: 800% 800%;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            font-size: 24px;
+            animation: rainbow 5s ease infinite;
+
+        }
+
+        @keyframes rainbow {
+            0%   {background-position: 0% 50%;   }
+            50%  {background-position: 100% 25%; }
+            100% {background-position: 0% 50%;   }
+        }
+
     }
 }

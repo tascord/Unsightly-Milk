@@ -4,9 +4,6 @@ const fs = require('fs');
 // Console Styling
 const chalk = require('chalk');
 
-// Game Handler
-const gameManager = require('./gameManager.js')(fs);
-
 // Start WebServer
 const app = require('express')();
 const http = require('http').createServer(app);
@@ -16,6 +13,9 @@ http.listen(8080, () => info("Started Server!"));
 // Getting Information From Forms
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Handling Games
+const gameManager = require('./gameManager.js')(fs, io);
 
 // Handling Web Requests
 app.get('*', (req, res) => {
@@ -54,10 +54,15 @@ app.get('*', (req, res) => {
 
         case "/play":
             // Rendering Games
-            var game = getGames(req.query)
+            if(!req.query.uuid || !req.query.code) return res.redirect('/?error=Please Provide The Correct POST Data!');
+            
+            var player = getPlayer(req.query.code, req.query.uuid);
+            var game = getGame(req.query.code);
 
-            if(game === false) return res.render(pageNon());
-            res.render(page('/games/' + game.game), {code: game.code});
+            if (game == false) return res.redirect('/?error=That Room Dosen\'t Exist');
+            if (player == false) return res.redirect('/?error=That Player Dosen\'t Exist!');
+
+            res.render(page('/games/client'), {style: "main.css", code: game.code, name: player.name, token: req.query.uuid, game: game.game});
         break;
 
         default:
@@ -82,13 +87,13 @@ app.post('*', (req, res) => {
             if(game === false) return res.redirect('/?error=That Room Dosen\'t Exist');
 
             if(getPlayer(code, name) != false) return res.redirect('/?error=A Player Already Has That Name!');
-            
+              
 
             var uuid = "";
             var uuidExists = true;
             while(uuidExists) {
 
-                uuid = randString(10);
+                uuid = randString(15);
                 var count = 0;
 
                 if(game.players.length === 0) uuidExists = false;
@@ -100,37 +105,60 @@ app.post('*', (req, res) => {
                 if(count == 0) uuidExists = false;
             }
 
-            createPlayer(game.code, {name: name, id: uuid, score: 0, streak: 0, topAnswer: ""});
+            createPlayer(game.code, {name: name, id: uuid, score: 0, streak: 0, topAnswer: ""}, function() { res.redirect('play?code=' + game.code + '&uuid=' + uuid); });
 
-            return res.redirect('play?code=' + game.code + '&uuid=' + uuid);
 
         break;
 
         case "/create":
             
-            var neweGame = req.body;
+            var newGame = req.body;
             
-            var code = "";
-            var codeExists = true;
-
             var games = getGames();
 
+            var code = "";
+            var codeExists = true;
             while(codeExists) {
 
                 code = randString(5, "0123456789");
                 var count = 0;
 
-                for(var j = 0; j < games.length; j++) {
-                    if(games[j].code === code) {count++}
+                for(var i = 0; i < games.length; i++) {
+                    if(games[i].code === code) {count++}
                 }
 
-                if(count == 0) uuidExists = false;
-            }            
+                if(count == 0) codeExists = false;
+            }
 
-            neweGame.code = code;
-            createGame(game);
+            var token = "";
+            var tokenExists = true;
+            while(tokenExists) {
 
-            res.send(getGames());
+                token = randString(20);
+                var count = 0;
+
+                for(var i = 0; i < games.length; i++) {
+                    if(games[i].token === token) {count++}
+                }
+
+                if(count == 0) tokenExists = false;
+            }
+
+            var questionPacks = [],
+                askedQuestions = [],
+                roundLength = 20,
+                roundCount = 10;
+
+            if(newGame.roundCount) roundCount = newGame.roundCount;
+            if(newGame.roundLength) roundLength = newGame.roundLength;
+            if(newGame.questionPacks) askedQuestions = newGame.questionPacks.split(',');
+
+            var data = {roundLength: roundLength, roundCount: roundCount, questionPacks: questionPacks, askedQuestions: []};
+
+            createGame({code: code, game: newGame.game.toLowerCase(), gameData: data, players: [], hostHeartbeat: true, hostToken: token});
+
+            res.render(page('/games/server'), {style: "main.css", game: newGame.game, socketGroup: token, code: code});
+
         break;
 
         default:
@@ -151,7 +179,7 @@ function page(pageName) {
         // File Dosen't Exist
 
         // Send An Error That The Page Dosen't Exist
-        console.log(`[-] Error: Invalid page provided ('${pageName}')!`);
+        error(`Invalid page provided ('${pageName}')!`);
         return pageNon();
     }
 
